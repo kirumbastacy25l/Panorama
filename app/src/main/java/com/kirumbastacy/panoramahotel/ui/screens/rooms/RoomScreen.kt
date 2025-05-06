@@ -75,7 +75,7 @@ fun RoomScreen(navController: NavController){
             TopAppBar(
                 title = { Text("Rooms") },
                 navigationIcon = {
-                    IconButton(onClick = { /* Handle back/nav */ }) {
+                    IconButton(onClick = { { navController.popBackStack() } }) {
                         androidx.compose.material3.Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 },

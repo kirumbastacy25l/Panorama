@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kirumbastacy.panoramahotel.R
+import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOK
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
 import com.kirumbastacy.panoramahotel.ui.theme.White
@@ -230,6 +231,7 @@ fun SuiteRoomScreen(navController: NavController){
 
                     Button(
                         onClick = {
+                            navController.navigate(ROUT_BOOK)
 
                         },
                         colors = ButtonDefaults.buttonColors(green),
@@ -238,7 +240,7 @@ fun SuiteRoomScreen(navController: NavController){
                     ) {
                         Text(
                             text = "Book Now",
-                            color = White,
+                            color = Color.White,
                             fontSize = 10.sp
                         )
                     }

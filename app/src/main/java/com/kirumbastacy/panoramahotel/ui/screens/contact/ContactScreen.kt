@@ -1,10 +1,19 @@
 package com.kirumbastacy.panoramahotel.ui.screens.contact
 
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -12,8 +21,10 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -26,14 +37,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.kirumbastacy.panoramahotel.R
 import com.kirumbastacy.panoramahotel.ui.screens.about.AboutScreen
+import com.kirumbastacy.panoramahotel.ui.theme.blue
 import com.kirumbastacy.panoramahotel.ui.theme.green
 
 
@@ -50,7 +66,7 @@ fun ContactScreen(navController: NavController){
             TopAppBar(
                 title = { Text("Contact") },
                 navigationIcon = {
-                    IconButton(onClick = { /* Handle back/nav */ }) {
+                    IconButton(onClick = { { navController.popBackStack() } }) {
                         androidx.compose.material3.Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 },
@@ -106,15 +122,7 @@ fun ContactScreen(navController: NavController){
             }
         },
 
-        //FloatingActionButton
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* Add action */ },
-                containerColor = green
-            ) {
-                androidx.compose.material3.Icon(Icons.Default.Add, contentDescription = "Add")
-            }
-        },
+
         //Content
         content = { paddingValues ->
             Column(
@@ -124,10 +132,111 @@ fun ContactScreen(navController: NavController){
             ) {
 
 
-                //Main Contents of the page
-                Text(text = "Welcome to Homescreen Screen", fontSize = 20.sp)
-                Spacer(modifier = Modifier.run { height(8.dp) })
-                Text("This is where the main content goes.")
+               Column (modifier = Modifier.fillMaxSize(),
+                       verticalArrangement = Arrangement.Top,
+                   horizontalAlignment = Alignment.Start){
+                   Text(
+                       text = "Contact Us",
+                       fontSize = 24.sp,
+                       fontWeight = FontWeight.Bold,
+                       modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                   )
+                   Spacer(modifier = Modifier.height(10.dp))
+
+
+                   Spacer(modifier = Modifier.height(24.dp))
+
+                   Row ( modifier = Modifier.padding(start = 16.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically){
+                       Image(
+                           painter = painterResource(id = R.drawable.img_9),
+                           contentDescription = "Location Icon",
+                           modifier = Modifier
+                               .size(50.dp)
+                       )
+                       Text(
+                           text = "Address",
+                           fontWeight = FontWeight.SemiBold,
+                           fontSize = 18.sp
+                       )
+                   }
+                   Text(
+                       modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+
+                       text = "123 Beach Road, Panorama City, California",
+                       fontSize = 16.sp
+                   )
+                   Spacer(modifier = Modifier.height(30.dp))
+
+                   Row ( modifier = Modifier.padding(start = 16.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically){
+                       Image(
+                           painter = painterResource(id = R.drawable.img_7),
+                           contentDescription = "Location Icon",
+                           modifier = Modifier
+                               .size(50.dp)
+                       )
+                       Text(
+
+
+
+                           text = "Contact",
+                           fontWeight = FontWeight.SemiBold,
+                           fontSize = 18.sp
+                       )
+                   }
+                   Text(
+                       text = "+254 0114 386 232",
+                       color = Color.Blue,
+                       fontSize = 16.sp,
+                       modifier = Modifier
+                           .padding(start = 16.dp, end = 16.dp).clickable {
+                           val intent = Intent(Intent.ACTION_DIAL).apply {
+                               data = Uri.parse("tel:+254114386232")
+                           }
+
+
+                       }
+                   )
+
+                   Spacer(modifier = Modifier.height(30.dp))
+
+                   Row ( modifier = Modifier.padding(start = 16.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically){
+                       Image(
+                           painter = painterResource(id = R.drawable.img_10),
+                           contentDescription = "Email Icon",
+                           modifier = Modifier
+                               .size(50.dp)
+                       )
+                       Spacer(modifier = Modifier.width(10.dp))
+                       Text(
+                           text = "Email",
+                           fontWeight = FontWeight.SemiBold,
+                           fontSize = 18.sp,
+
+                       )
+                   }
+
+                   Text(
+                       text = "panoramahotel@gmail.com",
+                       color = Color.Blue,
+                       fontSize = 16.sp,
+                       modifier = Modifier
+                           .padding(start = 16.dp, end = 16.dp).clickable {
+                           val intent = Intent(Intent.ACTION_SENDTO).apply {
+                               data = Uri.parse("mailto:panoramahotel@gmail.com")
+                           }
+
+                       }
+                   )
+
+
+
+
+
+
+
+
+
+               }
 
 
 

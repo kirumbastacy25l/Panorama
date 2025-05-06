@@ -1,4 +1,4 @@
-package com.kirumbastacy.panoramahotel.ui.screens.pay
+package com.kirumbastacy.panoramahotel.ui.screens.confirm
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,17 +48,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kirumbastacy.panoramahotel.R
-import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
+import com.kirumbastacy.panoramahotel.navigation.ROUT_PAY
 import com.kirumbastacy.panoramahotel.navigation.ROUT_PAYMENT
-
 import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
-
+import com.kirumbastacy.panoramahotel.ui.theme.black
 import com.kirumbastacy.panoramahotel.ui.theme.green
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PaymentScreen(navController: NavController){
+fun ConfirmScreen(navController: NavController){
     //Scaffold
 
     var selectedIndex by remember { mutableStateOf(0) }
@@ -67,9 +66,9 @@ fun PaymentScreen(navController: NavController){
         //TopBar
         topBar = {
             TopAppBar(
-                title = { Text("Confirmation") },
+                title = { Text("Contact") },
                 navigationIcon = {
-                    IconButton(onClick = {  { navController.popBackStack() } }) {
+                    IconButton(onClick = { /* Handle back/nav */ }) {
                         androidx.compose.material3.Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 },
@@ -186,7 +185,7 @@ fun PaymentScreen(navController: NavController){
                         )
 
                         Text(
-                            text = "Payment \nSuccessful",
+                            text = "Booking \nSuccessful",
                             fontSize = 40.sp,
                             fontWeight = FontWeight.Bold,
                             color = VeryWhite,
@@ -197,7 +196,7 @@ fun PaymentScreen(navController: NavController){
 
 
                         Text(
-                            text = "Your payment has been\nmade successfully",
+                            text = "Your booking has been\nmade successfully",
                             fontSize = 30.sp,
 
                             color = Color.White,
@@ -206,7 +205,7 @@ fun PaymentScreen(navController: NavController){
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(
                             onClick = {
-                                navController.navigate(ROUT_HOME)
+                                navController.navigate(ROUT_PAY)
 
                             },
                             colors = ButtonDefaults.buttonColors(green),
@@ -214,7 +213,7 @@ fun PaymentScreen(navController: NavController){
                             modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp)
                         ) {
                             Text(
-                                text = "Go To Home",
+                                text = "Continue to Payment",
                                 color = Color.White
                             )
                         }
@@ -252,6 +251,6 @@ fun PaymentScreen(navController: NavController){
 
 @Preview(showBackground = true)
 @Composable
-fun PaymentScreenPreview(){
-    PaymentScreen(navController = rememberNavController())
+fun ConfirmScreenPreview(){
+    ConfirmScreen(navController = rememberNavController())
 }

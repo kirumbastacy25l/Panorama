@@ -1,160 +1,257 @@
 package com.kirumbastacy.panoramahotel.ui.screens.booking
-
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import android.app.DatePickerDialog
+import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.kirumbastacy.panoramahotel.navigation.ROUT_CONFIRM
+import com.kirumbastacy.panoramahotel.navigation.ROUT_DETAILS
+import com.kirumbastacy.panoramahotel.ui.theme.black
 import com.kirumbastacy.panoramahotel.ui.theme.green
-
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookingScreen(navController: NavController){
-    var checkInDate by remember { mutableStateOf("Select Date") }
-    var checkOutDate by remember { mutableStateOf("Select Date") }
-    var guests by remember { mutableStateOf(1) }
-    //Scaffold
+fun BookingScreen(navController: NavController) {
+    val context = LocalContext.current
 
-    var selectedIndex by remember { mutableStateOf(0) }
+    // State variables
+    var fullName by remember { mutableStateOf("") }
+    var contact by remember { mutableStateOf("") }
+    var numberOfGuests by remember { mutableStateOf(1) }
+    var roomType by remember { mutableStateOf("Single Room") }
+    var checkInDate by remember { mutableStateOf("") }
+    var checkOutDate by remember { mutableStateOf("") }
+
+    // Room types
+    val roomTypes = listOf("Standard Room", "Deluxe Room", "Suite", "Presidential Suite")
 
     Scaffold(
-        //TopBar
         topBar = {
             TopAppBar(
-                title = { Text("Contact") },
+                title = { Text("Book a Room", color = Color.White) },
                 navigationIcon = {
-                    IconButton(onClick = { /* Handle back/nav */ }) {
-                        androidx.compose.material3.Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = green,
-                    titleContentColor = Color.White,
-                    navigationIconContentColor = Color.White
-                )
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = green)
             )
         },
-
-        //BottomBar
         bottomBar = {
-            NavigationBar(
-                containerColor = green
-            ){
-                NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Home, contentDescription = "Home") },
-                    label = { Text("Home") },
-                    selected = selectedIndex == 0,
-                    onClick = { selectedIndex = 0
-                        // navController.navigate(ROUT_HOME)
-                    }
-                )
-                NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
-                    selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1
-                        // navController.navigate(ROUT_HOME)
-                    }
-                )
-                NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
-                    selected = selectedIndex == 2,
-                    onClick = { selectedIndex = 2
-                        //  navController.navigate(ROUT_HOME)
-                    }
-                )
-                NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info") },
-                    label = { Text("Info") },
-                    selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1
-                        // navController.navigate(ROUT_HOME)
-                    }
-                )
-
-
-
-
-            }
+            BottomAppBar(
+                containerColor = green,
+                content = {
+                    Text(
+                        text = "Enjoy your stay!",
+                        color = Color.White,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+            )
         },
-
-        //FloatingActionButton
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* Add action */ },
-                containerColor = green
-            ) {
-                androidx.compose.material3.Icon(Icons.Default.Add, contentDescription = "Add")
-            }
-        },
-        //Content
         content = { paddingValues ->
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize()
+                    .background(Color(0xFFF5F5F5)) // Light background color
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                // Full Name
+                TextField(
+                    value = fullName,
+                    onValueChange = { fullName = it },
+                    label = { Text("Full Name") },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Filled.Person,
+                            contentDescription = "Username Icon",
+                            tint = green
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = black,
+                        focusedLabelColor = green,
+                        unfocusedLabelColor = Color.Black
+                    )
+                )
 
+                // Contact
+                TextField(
+                    value = contact,
+                    onValueChange = { contact = it },
+                    label = { Text("Contact") },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Filled.Phone,
+                            contentDescription = "Contact Icon",
+                            tint = green
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = black,
+                        focusedLabelColor = green,
+                        unfocusedLabelColor = Color.Black
+                    )
+                )
 
+                // Room Type Dropdown
+                var expanded by remember { mutableStateOf(false) }
+                TextField(
+                    value = roomType,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Room Type") },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Default.KeyboardArrowDown,
+                            contentDescription = "Room Type Icon",
+                            tint = green
+                        )
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = { expanded = !expanded }) {
+                            Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Dropdown Icon")
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = black,
+                        focusedLabelColor = green,
+                        unfocusedLabelColor = Color.Black
+                    )
+                )
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    roomTypes.forEach { type ->
+                        DropdownMenuItem(
+                            text = { Text(type) },
+                            onClick = {
+                                roomType = type
+                                expanded = false
+                            }
+                        )
+                    }
+                }
 
+                // Check-in Date
+                DatePickerField(
+                    label = "Check-in Date",
+                    selectedDate = checkInDate,
+                    onDateSelected = { checkInDate = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = black,
+                        focusedLabelColor = green,
+                        unfocusedLabelColor = Color.Black
+                    )
+                )
 
+                // Check-out Date
+                DatePickerField(
+                    label = "Check-out Date",
+                    selectedDate = checkOutDate,
+                    onDateSelected = { checkOutDate = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = black,
+                        focusedLabelColor = green,
+                        unfocusedLabelColor = Color.Black
+                    )
+                )
 
-
-
-
-
-
-
-
-
-
-
+                // Submit Button
+                Button(
+                    onClick = {
+                        navController.navigate(ROUT_DETAILS)
+                        if (fullName.isNotEmpty() && contact.isNotEmpty() && checkInDate.isNotEmpty() && checkOutDate.isNotEmpty()) {
+                            Toast.makeText(context, "Booking Successful!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = green)
+                ) {
+                    Text("Book Now", color = Color.White)
+                }
             }
         }
     )
+}
 
-    //End of scaffold
+@Composable
+fun DatePickerField(
+    label: String,
+    selectedDate: String,
+    onDateSelected: (String) -> Unit,
+    modifier: Modifier,
+    colors: TextFieldColors
+) {
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
 
-
-
-
-
-
-
+    TextField(
+        value = selectedDate,
+        onValueChange = {},
+        readOnly = true,
+        label = { Text(label) },
+        leadingIcon = {
+            Icon(
+                Icons.Default.DateRange,
+                contentDescription = "Date Icon",
+                tint = green
+            )
+        },
+        trailingIcon = {
+            IconButton(onClick = {
+                DatePickerDialog(
+                    context,
+                    { _, year, month, dayOfMonth ->
+                        calendar.set(year, month, dayOfMonth)
+                        onDateSelected("${dayOfMonth}/${month + 1}/${year}")
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }) {
+                Icon(Icons.Default.DateRange, contentDescription = "Select Date")
+            }
+        },
+        modifier = modifier,
+        colors = colors
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BookingScreenPreview(){
+fun BookingScreenPreview() {
     BookingScreen(navController = rememberNavController())
 }
