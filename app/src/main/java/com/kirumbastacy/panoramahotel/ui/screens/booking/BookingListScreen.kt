@@ -41,6 +41,7 @@ import com.kirumbastacy.panoramahotel.model.Booking
 import com.kirumbastacy.panoramahotel.viewmodel.BookingViewModel
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import com.kirumbastacy.panoramahotel.ui.theme.green
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -60,7 +61,7 @@ fun BookingListScreen(navController: NavController, viewModel: BookingViewModel)
             Column {
                 TopAppBar(
                     title = { Text("Bookings", fontSize = 20.sp) },
-                    colors = TopAppBarDefaults.mediumTopAppBarColors(Color.LightGray),
+                    colors = TopAppBarDefaults.mediumTopAppBarColors(green),
                     actions = {
                         IconButton(onClick = { showMenu = true }) {
                             Icon(imageVector = Icons.Default.MoreVert, contentDescription = "Menu")

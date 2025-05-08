@@ -1,6 +1,4 @@
 package com.kirumbastacy.panoramahotel.navigation
-
-
 import android.os.Build
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.annotation.RequiresApi
@@ -13,16 +11,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-
 import com.kirumbastacy.panoramahotel.data.UserDatabase
-import com.kirumbastacy.panoramahotel.model.Booking
 import com.kirumbastacy.panoramahotel.repository.UserRepository
 import com.kirumbastacy.panoramahotel.ui.screens.about.AboutScreen
 import com.kirumbastacy.panoramahotel.ui.screens.auth.LoginScreen
 import com.kirumbastacy.panoramahotel.ui.screens.auth.RegisterScreen
 import com.kirumbastacy.panoramahotel.ui.screens.booking.AddBookingScreen
 import com.kirumbastacy.panoramahotel.ui.screens.booking.BookingListScreen
-import com.kirumbastacy.panoramahotel.ui.screens.booking.BookingScreen
 import com.kirumbastacy.panoramahotel.ui.screens.booking.EditBookingScreen
 import com.kirumbastacy.panoramahotel.ui.screens.confirm.ConfirmScreen
 import com.kirumbastacy.panoramahotel.ui.screens.contact.ContactScreen
@@ -45,7 +40,7 @@ import com.kirumbastacy.panoramahotel.viewmodel.BookingViewModel
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUT_ROOMS,
+    startDestination: String = ROUT_ADD_BOOKING,
     bookingViewModel: BookingViewModel = viewModel(),
 ) {
     val context = LocalContext.current
@@ -120,9 +115,7 @@ fun AppNavHost(
             }
         }
 
-        composable(ROUT_BOOKING_SCREEN) {
-            BookingScreen(navController = navController, viewModel = bookingViewModel)
-        }
+
 
         composable(ROUT_ADD_BOOKING) {
             AddBookingScreen(navController, bookingViewModel)

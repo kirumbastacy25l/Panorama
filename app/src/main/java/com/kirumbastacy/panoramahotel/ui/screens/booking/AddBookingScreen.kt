@@ -1,5 +1,6 @@
 package com.kirumbastacy.panoramahotel.ui.screens.booking
 
+import android.app.DatePickerDialog
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -23,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.kirumbastacy.panoramahotel.R
@@ -30,10 +32,14 @@ import com.kirumbastacy.panoramahotel.model.Booking
 import com.kirumbastacy.panoramahotel.viewmodel.BookingViewModel
 import com.kirumbastacy.panoramahotel.navigation.ROUT_ADD_BOOKING
 import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
+import com.kirumbastacy.panoramahotel.ui.theme.green
+import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddBookingScreen(navController: NavController, viewModel: BookingViewModel) {
+    val roomTypes = listOf("Standard Room", "Deluxe Room", "Suite", "Presidential Suite")
+    var selectedRoomType by remember { mutableStateOf("") }
     var fullName by remember { mutableStateOf("") }
     var contact by remember { mutableStateOf("") }
     var roomType by remember { mutableStateOf("") }
@@ -42,6 +48,7 @@ fun AddBookingScreen(navController: NavController, viewModel: BookingViewModel) 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var showMenu by remember { mutableStateOf(false) }
     var isFormValid by remember { mutableStateOf(true) }
+    val bookingViewModel: BookingViewModel = viewModel()
 
     val context = LocalContext.current
 
@@ -56,8 +63,8 @@ fun AddBookingScreen(navController: NavController, viewModel: BookingViewModel) 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Add Booking", fontSize = 20.sp, fontWeight = FontWeight.Bold) },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(Color.LightGray),
+                title = { Text("Make Booking", fontSize = 20.sp, fontWeight = FontWeight.Bold) },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(green),
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "Back")
@@ -105,9 +112,17 @@ fun AddBookingScreen(navController: NavController, viewModel: BookingViewModel) 
                     value = fullName,
                     onValueChange = { fullName = it },
                     label = { Text("Full Name") },
-                    leadingIcon = { Icon(Icons.Default.Person, contentDescription = "Full Name") },
-                    modifier = Modifier.fillMaxWidth()
+                    leadingIcon = {
+                        Icon(Icons.Filled.Person, contentDescription = "Full Name Icon", tint = green)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.Black,
+                        focusedLabelColor = green,
+                        unfocusedLabelColor = Color.Black
+                    )
                 )
+
 
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -116,42 +131,85 @@ fun AddBookingScreen(navController: NavController, viewModel: BookingViewModel) 
                     value = contact,
                     onValueChange = { contact = it },
                     label = { Text("Contact") },
-                    leadingIcon = { Icon(Icons.Default.Phone, contentDescription = "Contact") },
-                    modifier = Modifier.fillMaxWidth()
+                    leadingIcon = {
+                        Icon(Icons.Filled.Phone, contentDescription = "Contact Icon", tint = green)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.Black,
+                        focusedLabelColor = green,
+                        unfocusedLabelColor = Color.Black
+                    )
                 )
-
                 Spacer(modifier = Modifier.height(10.dp))
-
-                // Room Type
+                // Room Type Dropdown
+                var expanded by remember { mutableStateOf(false) }
                 OutlinedTextField(
                     value = roomType,
-                    onValueChange = { roomType = it },
+                    onValueChange = {},
+                    readOnly = true,
                     label = { Text("Room Type") },
-                    leadingIcon = { Icon(Icons.Default.PlayArrow, contentDescription = "Room Type") },
-                    modifier = Modifier.fillMaxWidth()
+                    trailingIcon = {
+                        IconButton(onClick = { expanded = !expanded }) {
+                            Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Dropdown Icon")
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.Black,
+                        focusedLabelColor = green,
+                        unfocusedLabelColor = Color.Black
+                    )
                 )
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    roomTypes.forEach { type ->
+                        DropdownMenuItem(
+                            text = { Text(type) },
+                            onClick = {
+                                roomType = type
+                                expanded = false
+                            }
+                        )
+                    }
+                }
+
+
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 // Check-in Date
-                OutlinedTextField(
-                    value = checkInDate,
-                    onValueChange = { checkInDate = it },
-                    label = { Text("Check-in Date") },
-                    leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = "Check-in Date") },
-                    modifier = Modifier.fillMaxWidth()
+                DatePickerField(
+                    label = "Check-in Date",
+                    selectedDate = checkInDate,
+                    onDateSelected = { checkInDate = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.Black,
+                        focusedLabelColor = green,
+                        unfocusedLabelColor = Color.Black
+                    )
                 )
+
+
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 // Check-out Date
-                OutlinedTextField(
-                    value = checkOutDate,
-                    onValueChange = { checkOutDate = it },
-                    label = { Text("Check-out Date") },
-                    leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = "Check-out Date") },
-                    modifier = Modifier.fillMaxWidth()
+                DatePickerField(
+                    label = "Check-out Date",
+                    selectedDate = checkOutDate,
+                    onDateSelected = { checkOutDate = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.Black,
+                        focusedLabelColor = green,
+                        unfocusedLabelColor = Color.Black
+                    )
                 )
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -196,32 +254,66 @@ fun AddBookingScreen(navController: NavController, viewModel: BookingViewModel) 
                                 checkOutDate = checkOutDate,
                                 imagePath = imageUri?.toString() ?: ""
                             )
-                            viewModel.addBooking(newBooking)
-                            Toast.makeText(context, "Booking Added!", Toast.LENGTH_SHORT).show()
-                            navController.popBackStack()
+                            viewModel.addBooking(newBooking) // Add booking to the database
+                            Toast.makeText(context, "Booking Successfully Made!", Toast.LENGTH_SHORT).show()
+
+                            // Navigate to the booking list screen after successful booking
+                            navController.navigate(ROUT_BOOKING_LIST) {
+                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                            }
                         } else {
+                            // Show a toast message if the form is invalid
                             Toast.makeText(context, "Please fill all fields!", Toast.LENGTH_SHORT).show()
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(Color.LightGray)
+                    colors = ButtonDefaults.buttonColors(green)
                 ) {
-                    Text("Add Booking", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                }
-
-                // Show error message if form is invalid
-                if (!isFormValid) {
-                    Text(
-                        text = "Please fill out all fields.",
-                        color = Color.Red,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
+                    Text("Book Now", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
     )
 }
+
+@Composable
+fun DatePickerField(
+    label: String,
+    selectedDate: String,
+    onDateSelected: (String) -> Unit,
+    modifier: Modifier,
+    colors: TextFieldColors
+) {
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+
+    OutlinedTextField(
+        value = selectedDate,
+        onValueChange = {},
+        readOnly = true,
+        label = { Text(label) },
+        trailingIcon = {
+            IconButton(onClick = {
+                DatePickerDialog(
+                    context,
+                    { _, year, month, dayOfMonth ->
+                        calendar.set(year, month, dayOfMonth)
+                        onDateSelected("${dayOfMonth}/${month + 1}/${year}")
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }) {
+                Icon(Icons.Default.DateRange, contentDescription = "Select Date")
+            }
+        },
+        modifier = modifier,
+        colors = colors
+    )
+}
+
 
 // Bottom Navigation Bar Component
 @Composable

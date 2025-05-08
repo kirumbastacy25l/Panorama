@@ -21,7 +21,7 @@ const val ROUT_REGISTER = "Register"
 const val ROUT_LOGIN = "Login"
 
 //Bookings
-const val ROUT_BOOKING_SCREEN = "booking_screen"
+
 const val ROUT_ADD_BOOKING = "add_booking"
 const val ROUT_BOOKING_LIST = "booking_list"
 const val ROUT_EDIT_BOOKING = "edit_booking/{bookingId}"
