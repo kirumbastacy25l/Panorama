@@ -1,18 +1,17 @@
 package com.kirumbastacy.panoramahotel.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.kirumbastacy.panoramahotel.model.Booking
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookingDao {
+    @Query("SELECT * FROM bookings")
+    fun getAllBookings(): LiveData<List<Booking>>
+
     @Insert
     suspend fun insertBooking(booking: Booking)
-
-    @Query("SELECT * FROM bookings")
-    suspend fun getAllBookings(): List<Booking>
-
-    @Query("SELECT * FROM bookings WHERE id = :id")
-    suspend fun getBookingById(id: Int): Booking?
 
     @Update
     suspend fun updateBooking(booking: Booking)

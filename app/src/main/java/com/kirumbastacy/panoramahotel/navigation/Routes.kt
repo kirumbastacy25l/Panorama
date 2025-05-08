@@ -12,9 +12,6 @@ const val ROUT_PRESIDENTIAL = "presidential"
 const val ROUT_SPLASH= "splash"
 const val ROUT_PAYMENT= "payment"
 const val ROUT_CONFIRM= "confirm"
-const val ROUT_DETAILS= "details"
-const val ROUT_BOOK= "book"
-const val ROUT_EDIT= "edit"
 const val ROUT_PAY= "pay"
 
 
@@ -23,11 +20,13 @@ const val ROUT_PAY= "pay"
 const val ROUT_REGISTER = "Register"
 const val ROUT_LOGIN = "Login"
 
-//Booking
-
+//Bookings
+const val ROUT_BOOKING_SCREEN = "booking_screen"
+const val ROUT_ADD_BOOKING = "add_booking"
+const val ROUT_BOOKING_LIST = "booking_list"
 const val ROUT_EDIT_BOOKING = "edit_booking/{bookingId}"
+
 // ✅ Helper function for navigation
 fun editBookingRoute(bookingId: Int) = "edit_booking/$bookingId"
-
 
 

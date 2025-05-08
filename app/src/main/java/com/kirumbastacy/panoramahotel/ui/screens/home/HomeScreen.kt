@@ -52,8 +52,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kirumbastacy.panoramahotel.R
+import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
 import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
-import com.kirumbastacy.panoramahotel.navigation.ROUT_DETAILS
+
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 import com.kirumbastacy.panoramahotel.navigation.ROUT_ROOMS
 import com.kirumbastacy.panoramahotel.ui.theme.LightBrown
@@ -219,7 +220,7 @@ fun HomeScreen(navController: NavController){
                             Card ( modifier = Modifier
                                 .fillMaxWidth()
                                 .height(60.dp)
-                                .clickable{navController.navigate(ROUT_DETAILS)},
+                                .clickable{navController.navigate(ROUT_BOOKING_LIST)},
                                 elevation = CardDefaults.cardElevation(10.dp)
                             )
                             {
