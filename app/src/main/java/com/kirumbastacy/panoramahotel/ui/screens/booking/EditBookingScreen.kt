@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.kirumbastacy.panoramahotel.model.Booking
+import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
+import com.kirumbastacy.panoramahotel.ui.theme.green
 import com.kirumbastacy.panoramahotel.viewmodel.BookingViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +56,7 @@ fun EditBookingScreen(bookingId: Int?, navController: NavController, viewModel: 
         topBar = {
             TopAppBar(
                 title = { Text("Edit Booking") },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(green),
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
@@ -70,7 +73,7 @@ fun EditBookingScreen(bookingId: Int?, navController: NavController, viewModel: 
                         DropdownMenuItem(
                             text = { Text("Home") },
                             onClick = {
-                                navController.navigate("booking_list")
+                                navController.navigate(ROUT_HOME)
                                 showMenu = false
                             }
                         )
@@ -181,7 +184,7 @@ fun EditBookingScreen(bookingId: Int?, navController: NavController, viewModel: 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     NavigationBar(
-        containerColor = Color(0xFF6F6A72),
+        containerColor = green,
         contentColor = Color.White
     ) {
         NavigationBarItem(

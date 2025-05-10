@@ -46,6 +46,7 @@ fun RegisterScreen(
     var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val animatedAlpha by animateFloatAsState(
         targetValue = 1f,
@@ -61,9 +62,14 @@ fun RegisterScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(8.dp))
+        Image(
+            painter = painterResource(R.drawable.register),
+            contentDescription = "home",
+
+            )
         AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
             Text(
-                "Create Your Account",
+                "CREATE AN ACCOUNT",
                 fontSize = 40.sp,
                 fontFamily = FontFamily.Cursive
             )
@@ -76,7 +82,16 @@ fun RegisterScreen(
             value = username,
             onValueChange = { username= it },
             label = { Text("Username") },
-            leadingIcon = { Icon(Icons.Filled.Person, contentDescription = "Username Icon") },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Gray,
+                focusedLabelColor = green,
+                unfocusedLabelColor = Color.Black
+
+            ),
+
+
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    leadingIcon = { Icon(Icons.Filled.Person, contentDescription = "Username Icon", tint = green) },
             modifier = Modifier.fillMaxWidth()
 
         )
@@ -91,19 +106,28 @@ fun RegisterScreen(
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
-            leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon") },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Gray,
+                focusedLabelColor = green,
+                unfocusedLabelColor = Color.Black
+
+            ),
+
+            leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon", tint = green) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth()
-
         )
+        if (!email.contains("@")) {
+            Text("Invalid email address", color = Color.Red, fontSize = 12.sp)
+        }
         //End of email
 
         Spacer(modifier = Modifier.height(8.dp))
 
 
         //Role
-        var role by remember { mutableStateOf("user") }
-        val roleOptions = listOf("user", "admin")
+        var role by remember { mutableStateOf("guest") }
+        val roleOptions = listOf("guest", "admin")
         var expanded by remember { mutableStateOf(false) }
 
         ExposedDropdownMenuBox(
@@ -146,14 +170,22 @@ fun RegisterScreen(
             onValueChange = { password = it },
             label = { Text("Password") },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon") },
+            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon", tint = green) },
             trailingIcon = {
                 val image = if (passwordVisible) painterResource(R.drawable.visibility)  else painterResource(R.drawable.visibilityoff)
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(image, contentDescription = if (passwordVisible) "Hide Password" else "Show Password")
                 }
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Gray,
+                focusedLabelColor =green,
+                unfocusedLabelColor = Color.Black
+
+            ),
+
+
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -165,7 +197,13 @@ fun RegisterScreen(
             onValueChange = { confirmPassword = it },
             label = { Text("Confirm Password") },
             visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Confirm Password Icon") },
+            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Confirm Password Icon", tint = green) },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Gray,
+                focusedLabelColor = green,
+                unfocusedLabelColor = Color.Black
+
+            ),
             trailingIcon = {
                 val image = if (confirmPasswordVisible) painterResource(R.drawable.visibility)  else painterResource(R.drawable.visibilityoff)
                 IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
@@ -177,33 +215,32 @@ fun RegisterScreen(
         )
 
         Spacer(modifier = Modifier.height(5.dp))
+        
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                color = green
+            )
+        }
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(Color(0xFF1D5B1F), Color(0xFF1C3B1D))
-                    ),
-                    shape = MaterialTheme.shapes.medium
-                ),
-            contentAlignment = Alignment.Center
+        Button(
+            onClick = {
+                if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
+                    Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
+                } else if (password != confirmPassword) {
+                    Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                } else {
+                    isLoading = true
+                    authViewModel.registerUser(User(username = username, email = email, role = role, password = password))
+                    onRegisterSuccess()
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = green)
         ) {
-            Button(
-                onClick = {
-                    if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
-                        Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
-                    } else if (password != confirmPassword) {
-                        Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
-                    } else {
-                        authViewModel.registerUser(User(username = username, email = email, role = role, password = password))
-                        onRegisterSuccess()
-                    }
-                },
-                modifier = Modifier.fillMaxSize().padding(start = 20.dp, end = 20.dp),
-                colors = ButtonDefaults.buttonColors(green)
-            ) {
+            if (isLoading) {
+                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
+            } else {
                 Text("Register", color = Color.White)
             }
         }

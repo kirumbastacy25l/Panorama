@@ -48,6 +48,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kirumbastacy.panoramahotel.R
+import com.kirumbastacy.panoramahotel.navigation.ROUT_ABOUT
+import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
+import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
+import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 import com.kirumbastacy.panoramahotel.ui.screens.about.AboutScreen
 import com.kirumbastacy.panoramahotel.ui.theme.blue
 import com.kirumbastacy.panoramahotel.ui.theme.green
@@ -88,31 +92,31 @@ fun ContactScreen(navController: NavController){
                     label = { Text("Home") },
                     selected = selectedIndex == 0,
                     onClick = { selectedIndex = 0
-                        // navController.navigate(ROUT_HOME)
+                        navController.navigate(ROUT_HOME)
                     }
                 )
                 NavigationBarItem(
                     icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
+                    label = { Text("Bookings") },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                        // navController.navigate(ROUT_HOME)
+                        navController.navigate(ROUT_BOOKING_LIST)
                     }
                 )
                 NavigationBarItem(
                     icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
+                    label = { Text("Contact") },
                     selected = selectedIndex == 2,
                     onClick = { selectedIndex = 2
-                        //  navController.navigate(ROUT_HOME)
+                         navController.navigate(ROUT_CONTACT)
                     }
                 )
                 NavigationBarItem(
                     icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info") },
-                    label = { Text("Info") },
+                    label = { Text("About") },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                        // navController.navigate(ROUT_HOME)
+                         navController.navigate(ROUT_ABOUT)
                     }
                 )
 

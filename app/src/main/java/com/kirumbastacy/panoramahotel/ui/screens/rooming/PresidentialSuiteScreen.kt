@@ -3,8 +3,8 @@ package com.kirumbastacy.panoramahotel.ui.screens.rooming
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -38,14 +38,14 @@ import com.kirumbastacy.panoramahotel.ui.theme.green
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuiteRoomScreen(navController: NavController) {
+fun PresidentialSuiteScreen(navController: NavController) {
     var selectedIndex by remember { mutableStateOf(0) }
 
     Scaffold(
         // TopBar
         topBar = {
             TopAppBar(
-                title = { Text("Suite Room") },
+                title = { Text("Presidential Suite") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
@@ -121,8 +121,8 @@ fun SuiteRoomScreen(navController: NavController) {
                 ) {
                     Column(modifier = Modifier.fillMaxSize()) {
                         Image(
-                            painter = painterResource(R.drawable.lux),
-                            contentDescription = "Suite Room",
+                            painter = painterResource(R.drawable.img_1),
+                            contentDescription = "Presidential Suite",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(150.dp),
@@ -141,13 +141,13 @@ fun SuiteRoomScreen(navController: NavController) {
                             }
                         }
                         Text(
-                            text = "Suite Room",
+                            text = "Presidential Suite",
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp,
                             modifier = Modifier.padding(start = 8.dp, top = 8.dp)
                         )
                         Text(
-                            text = "Ksh. 30,000 per night",
+                            text = "Ksh. 50,000 per night",
                             fontSize = 14.sp,
                             color = Color.Gray,
                             modifier = Modifier.padding(start = 8.dp, top = 4.dp, bottom = 8.dp)
@@ -171,7 +171,7 @@ fun SuiteRoomScreen(navController: NavController) {
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         Text(
-                            text = "Our Suite Room offers the ultimate luxury experience with spacious interiors, premium amenities, and breathtaking views. Perfect for those seeking an unforgettable stay.",
+                            text = "The Presidential Suite offers unparalleled luxury, with expansive living spaces, world-class amenities, and breathtaking views. Perfect for VIPs and those seeking the ultimate indulgence.",
                             fontSize = 14.sp,
                             color = Color.Gray
                         )
@@ -194,9 +194,10 @@ fun SuiteRoomScreen(navController: NavController) {
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         Column {
-                            Text("• Spacious and luxurious", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
-                            Text("• Private balcony with stunning views", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
-                            Text("• Access to exclusive lounge and services", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
+                            Text("• Expansive and luxurious living spaces", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
+                            Text("• Private butler service", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
+                            Text("• Panoramic views of the city", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
+                            Text("• Exclusive access to VIP amenities", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -208,8 +209,8 @@ fun SuiteRoomScreen(navController: NavController) {
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         Column {
-                            Text("• Expensive price point", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
-                            Text("• Limited availability during peak seasons", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
+                            Text("• Extremely high price point", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
+                            Text("• Limited availability", fontSize = 14.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -238,6 +239,6 @@ fun SuiteRoomScreen(navController: NavController) {
 
 @Preview(showBackground = true)
 @Composable
-fun SuiteRoomScreenPreview() {
-    SuiteRoomScreen(rememberNavController())
+fun PresidentialSuiteScreenPreview() {
+    PresidentialSuiteScreen(rememberNavController())
 }

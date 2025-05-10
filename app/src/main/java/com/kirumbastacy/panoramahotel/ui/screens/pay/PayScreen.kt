@@ -34,6 +34,7 @@ fun PayScreen(navController: NavController) {
     var expiryDate by remember { mutableStateOf("") }
     var cvv by remember { mutableStateOf("") }
     val context = LocalContext.current
+    val mContext = LocalContext.current //VERY IMPORTANT
 
     Scaffold(
         topBar = {
@@ -108,6 +109,9 @@ fun PayScreen(navController: NavController) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(
                             onClick = {
+                                val simToolKitLaunchIntent =
+                                    mContext.packageManager.getLaunchIntentForPackage("com.android.stk")
+                                simToolKitLaunchIntent?.let { mContext.startActivity(it) }
                                 if (phoneNumber.isNotEmpty()) {
                                     Toast.makeText(context, "Processing M-Pesa Payment", Toast.LENGTH_SHORT).show()
                                 } else {

@@ -41,6 +41,9 @@ import com.kirumbastacy.panoramahotel.model.Booking
 import com.kirumbastacy.panoramahotel.viewmodel.BookingViewModel
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
+import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
+import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
 import com.kirumbastacy.panoramahotel.ui.theme.green
 
 
@@ -59,8 +62,12 @@ fun BookingListScreen(navController: NavController, viewModel: BookingViewModel)
     Scaffold(
         topBar = {
             Column {
-                TopAppBar(
-                    title = { Text("Bookings", fontSize = 20.sp) },
+                TopAppBar(navigationIcon = {
+                    IconButton(onClick = {navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                    title = { Text("Bookings", fontSize = 30.sp, fontWeight = FontWeight.Bold) },
                     colors = TopAppBarDefaults.mediumTopAppBarColors(green),
                     actions = {
                         IconButton(onClick = { showMenu = true }) {
@@ -84,6 +91,7 @@ fun BookingListScreen(navController: NavController, viewModel: BookingViewModel)
                                     showMenu = false
                                 }
                             )
+
                         }
                     }
                 )
@@ -154,7 +162,7 @@ fun BookingItem(navController: NavController, booking: Booking, viewModel: Booki
             // Booking Image
             Image(
                 painter = painter,
-                contentDescription = "Booking Image",
+                contentDescription = "Guest Image",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
@@ -189,6 +197,18 @@ fun BookingItem(navController: NavController, booking: Booking, viewModel: Booki
                 Text(
                     text = "Room Type: ${booking.roomType}",
                     fontSize = 16.sp,
+                    color = Color.White
+                )
+                Text(
+                    text = booking.checkInDate,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Text(
+                    text = booking.checkOutDate,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
             }
@@ -256,21 +276,28 @@ fun BookingItem(navController: NavController, booking: Booking, viewModel: Booki
 @Composable
 fun BookingBottomBar(navController: NavController) {
     NavigationBar(
-        containerColor = Color(0xFFA2B9A2),
+        containerColor = green,
         contentColor = Color.White
     ) {
         NavigationBarItem(
             selected = false,
-            onClick = { navController.navigate("booking_list") },
-            icon = { Icon(Icons.Default.Home, contentDescription = "Booking List") },
-            label = { Text("Home") }
+            onClick = { navController.navigate(ROUT_HOME) },
+            icon = { Icon(Icons.Default.Home, contentDescription = "Booking List", tint = Color.White) },
+            label = { Text("Home",color = VeryWhite) }
         )
         NavigationBarItem(
             selected = false,
             onClick = { navController.navigate("add_booking") },
-            icon = { Icon(Icons.Default.AddCircle, contentDescription = "Add Booking") },
-            label = { Text("Add") },
+            icon = { Icon(Icons.Default.AddCircle, contentDescription = "Add Booking", tint = Color.White) },
+            label = { Text("Add", color = VeryWhite) },
 
         )
+        NavigationBarItem(
+            selected = false,
+            onClick = { navController.navigate(ROUT_CONTACT) },
+            icon = { Icon(Icons.Default.Phone, contentDescription = "Add Booking", tint = Color.White) },
+            label = { Text("Contact", color = VeryWhite) },
+
+            )
     }
 }

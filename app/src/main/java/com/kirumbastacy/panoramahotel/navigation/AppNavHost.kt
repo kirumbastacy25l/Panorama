@@ -40,7 +40,7 @@ import com.kirumbastacy.panoramahotel.viewmodel.BookingViewModel
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUT_ADD_BOOKING,
+    startDestination: String = ROUT_SPLASH,
     bookingViewModel: BookingViewModel = viewModel(),
 ) {
     val context = LocalContext.current

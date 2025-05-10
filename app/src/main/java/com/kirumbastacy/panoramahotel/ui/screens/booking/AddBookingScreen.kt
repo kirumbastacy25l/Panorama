@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -22,6 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -32,6 +34,8 @@ import com.kirumbastacy.panoramahotel.model.Booking
 import com.kirumbastacy.panoramahotel.viewmodel.BookingViewModel
 import com.kirumbastacy.panoramahotel.navigation.ROUT_ADD_BOOKING
 import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
+import com.kirumbastacy.panoramahotel.navigation.ROUT_CONFIRM
+import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 import com.kirumbastacy.panoramahotel.ui.theme.green
 import java.util.Calendar
 
@@ -139,7 +143,8 @@ fun AddBookingScreen(navController: NavController, viewModel: BookingViewModel) 
                         focusedBorderColor = Color.Black,
                         focusedLabelColor = green,
                         unfocusedLabelColor = Color.Black
-                    )
+                    ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 // Room Type Dropdown
@@ -230,7 +235,7 @@ fun AddBookingScreen(navController: NavController, viewModel: BookingViewModel) 
                         )
                     } else {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Icon(painter = painterResource(R.drawable.image), contentDescription = "Pick Image")
+                            Icon(painter = painterResource(R.drawable.image), contentDescription = "Guest Image")
                             Text("Tap to pick image", color = Color.DarkGray)
                         }
                     }
@@ -258,7 +263,7 @@ fun AddBookingScreen(navController: NavController, viewModel: BookingViewModel) 
                             Toast.makeText(context, "Booking Successfully Made!", Toast.LENGTH_SHORT).show()
 
                             // Navigate to the booking list screen after successful booking
-                            navController.navigate(ROUT_BOOKING_LIST) {
+                            navController.navigate(ROUT_CONFIRM) {
                                 popUpTo(navController.graph.startDestinationId) { inclusive = true }
                             }
                         } else {
@@ -319,12 +324,12 @@ fun DatePickerField(
 @Composable
 fun BottomNavigationBar1(navController: NavController) {
     NavigationBar(
-        containerColor = Color(0xFF6F6A72),
+        containerColor = green,
         contentColor = Color.White
     ) {
         NavigationBarItem(
             selected = false,
-            onClick = { navController.navigate(ROUT_BOOKING_LIST) },
+            onClick = { navController.navigate(ROUT_HOME) },
             icon = { Icon(Icons.Default.Home, contentDescription = "Booking List") },
             label = { Text("Home") }
         )

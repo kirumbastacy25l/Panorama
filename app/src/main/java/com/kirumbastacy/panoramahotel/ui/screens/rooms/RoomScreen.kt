@@ -16,10 +16,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -52,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kirumbastacy.panoramahotel.R
+import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
 import com.kirumbastacy.panoramahotel.navigation.ROUT_DELUXE
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 import com.kirumbastacy.panoramahotel.navigation.ROUT_PRESIDENTIAL
@@ -93,7 +96,7 @@ fun RoomScreen(navController: NavController){
                 containerColor = green
             ){
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Home, contentDescription = "Home") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Home, contentDescription = "Home", ) },
                     label = { Text("Home") },
                     selected = selectedIndex == 0,
                     onClick = { selectedIndex = 0
@@ -101,24 +104,24 @@ fun RoomScreen(navController: NavController){
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.DateRange, contentDescription = "Favorites", tint = Color.White) },
+                    label = { Text("Bookings", color = VeryWhite) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                        // navController.navigate(ROUT_HOME)
+                         navController.navigate(ROUT_BOOKING_LIST)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Phone, contentDescription = "Profile", tint = Color.White) },
+                    label = { Text("Contact", color = VeryWhite) },
                     selected = selectedIndex == 2,
                     onClick = { selectedIndex = 2
                         //  navController.navigate(ROUT_HOME)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info") },
-                    label = { Text("Info") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info", tint = Color.White) },
+                    label = { Text("About", color = VeryWhite) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
                         // navController.navigate(ROUT_HOME)
@@ -131,15 +134,7 @@ fun RoomScreen(navController: NavController){
             }
         },
 
-        //FloatingActionButton
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* Add action */ },
-                containerColor = green
-            ) {
-                androidx.compose.material3.Icon(Icons.Default.Add, contentDescription = "Add")
-            }
-        },
+       
         //Content
         content = { paddingValues ->
             Column(
@@ -223,8 +218,7 @@ fun RoomScreen(navController: NavController){
                             Icon(imageVector = Icons.Default.Star, contentDescription = "", tint = green)
                             Icon(imageVector = Icons.Default.Star, contentDescription = "", tint = green)
                             Icon(imageVector = Icons.Default.Star, contentDescription = "", tint = green)
-                            Icon(imageVector = Icons.Default.Star, contentDescription = "", )
-                            Icon(imageVector = Icons.Default.Star, contentDescription = "", )
+
                         }
 
                         Text(

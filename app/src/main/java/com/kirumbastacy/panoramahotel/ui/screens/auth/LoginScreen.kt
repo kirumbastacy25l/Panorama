@@ -30,6 +30,7 @@ import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 
 
 import com.kirumbastacy.panoramahotel.navigation.ROUT_REGISTER
+import com.kirumbastacy.panoramahotel.ui.theme.green
 import com.kirumbastacy.panoramahotel.viewmodel.AuthViewModel
 
 @Composable
@@ -41,6 +42,7 @@ fun LoginScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     // Observe login logic
@@ -53,7 +55,7 @@ fun LoginScreen(
                     navController.navigate(ROUT_HOME) {
                     }
                 } else {
-                    navController.navigate(ROUT_ABOUT) {
+                    navController.navigate(ROUT_HOME) {
                     }
                 }
             }
@@ -74,6 +76,7 @@ fun LoginScreen(
             enter = fadeIn(animationSpec = tween(1000)),
             exit = fadeOut(animationSpec = tween(1000))
         ) {
+
             Text(
                 text = "Welcome Back!",
                 fontSize = 40.sp,
@@ -82,18 +85,23 @@ fun LoginScreen(
         }
 
         Spacer(modifier = Modifier.height(24.dp))
-
-        // Email Input
+        //Email
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
-            leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp)
-        )
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Gray,
+                focusedLabelColor = green,
+                unfocusedLabelColor = Color.Black
 
+            ),
+
+            leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon", tint = green) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            modifier = Modifier.fillMaxWidth()
+        )
+        //End of email
         Spacer(modifier = Modifier.height(12.dp))
 
         // Password Input with Show/Hide Toggle
@@ -101,7 +109,7 @@ fun LoginScreen(
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
-            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon") },
+            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon", tint = green) },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth(),
@@ -117,32 +125,22 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         // Gradient Login Button
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(Color(0xFF00C6FF), Color(0xFF0072FF))
-                    ),
-                    shape = RoundedCornerShape(12.dp)
-                ),
-            contentAlignment = Alignment.Center
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                color = green
+            )
+        }
+
+        Button(
+            onClick = {
+                isLoading = true
+                authViewModel.loginUser(email, password)
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = green)
         ) {
-            Button(
-                onClick = {
-                    if (email.isBlank() || password.isBlank()) {
-                        Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT).show()
-                    } else {
-                        authViewModel.loginUser(email, password)
-                    }
-                },
-                modifier = Modifier.fillMaxSize(),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text("Login", color = Color.White)
-            }
+            Text("Login", color = Color.White)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -150,6 +148,21 @@ fun LoginScreen(
         // Register Navigation Button
         TextButton(onClick = { navController.navigate(ROUT_REGISTER) }) {
             Text("Don't have an account? Register")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Social Media Login Buttons
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            IconButton(onClick = { /* Handle Google Login */ }) {
+                Icon(painter = painterResource(R.drawable.img_15), contentDescription = "Google Login")
+            }
+            IconButton(onClick = { /* Handle Facebook Login */ }) {
+                Icon(painter = painterResource(R.drawable.img_16), contentDescription = "Facebook Login")
+            }
         }
     }
 }

@@ -16,3 +16,6 @@ val black = Color(0xFF181616)
 val GoldenColor = Color(0xFFFFD700)
 val LightBrown = Color(0xFFCD853F)
 val blue= Color(0xFF82E1EC)
+val SoftGold = Color(0xFFFFE135)     // lighter gold
+val RoseGold = Color(0xFFB76E79)     // rose-toned gold
+val AntiqueGold = Color(0xFFCFB53B)  // deeper, antique-style gold

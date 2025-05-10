@@ -18,6 +18,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,7 +31,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kirumbastacy.panoramahotel.R
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
+import com.kirumbastacy.panoramahotel.navigation.ROUT_LOGIN
+import com.kirumbastacy.panoramahotel.ui.theme.AntiqueGold
 import com.kirumbastacy.panoramahotel.ui.theme.GoldenColor
+import com.kirumbastacy.panoramahotel.ui.theme.SoftGold
 import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +50,7 @@ fun SplashScreen(navController: NavController){
     coroutine.launch {
 
         delay(2000)
-        navController.navigate(ROUT_HOME)
+        navController.navigate(ROUT_LOGIN)
 
     }
 
@@ -69,17 +74,21 @@ fun SplashScreen(navController: NavController){
         }
 
         Image(
-            painter = painterResource(id = R.drawable.lounge),
+            painter = painterResource(id = R.drawable.mod),
             contentDescription = "Room Image",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
+                .graphicsLayer(
+                    scaleX = 1.0f, // Zoom out horizontally (adjust as needed)
+
+                )
 
         )
 
         Column(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(top = 460.dp),
+                .padding(top = 300.dp),
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
@@ -92,9 +101,9 @@ fun SplashScreen(navController: NavController){
 
             Text(
                 text = "PANORAMA \nHOTEL",
-                fontSize = 40.sp,
+                fontSize = 60.sp,
                 fontWeight = FontWeight.Bold,
-                color = VeryWhite,
+                color = Color.White,
                 textAlign = TextAlign.Center
             )
 
@@ -103,9 +112,9 @@ fun SplashScreen(navController: NavController){
 
             Text(
                 text = "Luxury & Comfort at\nyour fingertips",
-                fontSize = 30.sp,
+                fontSize = 35.sp,
 
-                color = VeryWhite,
+                color = Color.White,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(16.dp))

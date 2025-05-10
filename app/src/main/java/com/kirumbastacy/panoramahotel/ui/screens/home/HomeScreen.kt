@@ -18,6 +18,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -52,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kirumbastacy.panoramahotel.R
+import com.kirumbastacy.panoramahotel.navigation.ROUT_ABOUT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
 import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
 
@@ -73,12 +76,8 @@ fun HomeScreen(navController: NavController){
         //TopBar
         topBar = {
             TopAppBar(
-                title = { Text("Contact") },
-                navigationIcon = {
-                    IconButton(onClick = { /* Handle back/nav */ }) {
-                        androidx.compose.material3.Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                },
+                title = { Text("PANORAMA HOTEL HOME PAGE", fontWeight = FontWeight.SemiBold) },
+
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = green,
                     titleContentColor = Color.White,
@@ -94,34 +93,34 @@ fun HomeScreen(navController: NavController){
             ){
                 NavigationBarItem(
                     icon = { androidx.compose.material3.Icon(Icons.Default.Home, contentDescription = "Home") },
-                    label = { Text("Home") },
+                    label = { Text("Home", color = VeryWhite) },
                     selected = selectedIndex == 0,
                     onClick = { selectedIndex = 0
-                        // navController.navigate(ROUT_HOME)
+                        navController.navigate(ROUT_HOME)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.DateRange, contentDescription = "Bookings",tint = Color.White) },
+                    label = { Text("Bookings", color = VeryWhite) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                        // navController.navigate(ROUT_HOME)
+                         navController.navigate(ROUT_BOOKING_LIST)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Call, contentDescription = "Profile",tint = Color.White) },
+                    label = { Text("Contact", color = VeryWhite) },
                     selected = selectedIndex == 2,
                     onClick = { selectedIndex = 2
-                        //  navController.navigate(ROUT_HOME)
+                          navController.navigate(ROUT_CONTACT)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info") },
-                    label = { Text("Info") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info",tint = Color.White) },
+                    label = { Text("About", color = VeryWhite) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                        // navController.navigate(ROUT_HOME)
+                         navController.navigate(ROUT_ABOUT)
                     }
                 )
 
@@ -131,15 +130,7 @@ fun HomeScreen(navController: NavController){
             }
         },
 
-        //FloatingActionButton
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* Add action */ },
-                containerColor = green
-            ) {
-                androidx.compose.material3.Icon(Icons.Default.Add, contentDescription = "Add")
-            }
-        },
+
         //Content
         content = { paddingValues ->
             Column(
@@ -150,7 +141,7 @@ fun HomeScreen(navController: NavController){
                 Box (modifier = Modifier.fillMaxSize()){
 
                         Image(
-                        painter = painterResource(R.drawable.bb),
+                        painter = painterResource(R.drawable.mod),
                         contentDescription = "home",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
@@ -171,12 +162,7 @@ fun HomeScreen(navController: NavController){
 
                         Spacer(modifier = Modifier.height(50.dp))
 
-                        Text(
-                            text = "Panorama Hotel",
-                            fontSize = 36.sp,
-                            fontWeight = FontWeight.ExtraBold,
-                            color = Color.White
-                        )
+
 
                         Spacer(modifier = Modifier.height(32.dp))
 
@@ -227,7 +213,7 @@ fun HomeScreen(navController: NavController){
                                 Row (  verticalAlignment = Alignment.CenterVertically){
                                     Image(
                                         painter = painterResource(id = R.drawable.img_6),
-                                        contentDescription = "Bed Icon",
+                                        contentDescription = "Book Icon",
                                         modifier = Modifier
                                             .size(50.dp)
                                             .padding(start = 8.dp, )
@@ -264,14 +250,14 @@ fun HomeScreen(navController: NavController){
                             {
                                 Row ( modifier = Modifier.padding(start = 16.dp, end = 16.dp),verticalAlignment = Alignment.CenterVertically){
                                     Image(
-                                        painter = painterResource(id = R.drawable.img_8),
+                                        painter = painterResource(id = R.drawable.img_14),
                                         contentDescription = "Bed Icon",
                                         modifier = Modifier
                                             .size(50.dp)
                                     )
                                     Spacer(modifier = Modifier.width(15.dp))
                                     Text(
-                                        text = "Make Payment",
+                                        text = "About ",
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.Bold,
                                         color = LightBrown,
