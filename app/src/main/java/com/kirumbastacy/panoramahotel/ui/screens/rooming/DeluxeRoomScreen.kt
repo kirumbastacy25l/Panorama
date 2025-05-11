@@ -6,10 +6,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -29,7 +31,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kirumbastacy.panoramahotel.R
+import com.kirumbastacy.panoramahotel.navigation.ROUT_ABOUT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_ADD_BOOKING
+import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
+import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
 import com.kirumbastacy.panoramahotel.ui.theme.green
@@ -70,35 +75,33 @@ fun DeluxeRoomScreen(navController: NavController) {
                     }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
+                    icon = { Icon(Icons.Default.DateRange, contentDescription = "Contact", tint = Color.White) },
+                    label = { Text("Bookings") },
                     selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1 }
+                    onClick = { selectedIndex = 1
+                        navController.navigate(ROUT_BOOKING_LIST)}
+
+
+
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
+                    icon = { Icon(Icons.Default.Phone, contentDescription = "Profile", tint = Color.White) },
+                    label = { Text("Contact") },
                     selected = selectedIndex == 2,
-                    onClick = { selectedIndex = 2 }
+                    onClick = { selectedIndex = 2
+                        navController.navigate(ROUT_CONTACT)}
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Info, contentDescription = "Info") },
-                    label = { Text("Info") },
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Info", tint = Color.White) },
+                    label = { Text("About") },
                     selected = selectedIndex == 3,
-                    onClick = { selectedIndex = 3 }
+                    onClick = { selectedIndex = 3
+                        navController.navigate(ROUT_ABOUT)}
                 )
             }
         },
 
-        // FloatingActionButton
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* Add action */ },
-                containerColor = green
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "Add")
-            }
-        },
+
 
         // Content
         content = { paddingValues ->
@@ -111,7 +114,7 @@ fun DeluxeRoomScreen(navController: NavController) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(240.dp)
+                        .height(260.dp)
                         .padding(8.dp),
                     colors = CardDefaults.cardColors(VeryWhite),
                     shape = RoundedCornerShape(12.dp)

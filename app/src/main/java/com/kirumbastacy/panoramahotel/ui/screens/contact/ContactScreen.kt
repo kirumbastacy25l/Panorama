@@ -9,21 +9,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Card
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
@@ -52,26 +49,21 @@ import com.kirumbastacy.panoramahotel.navigation.ROUT_ABOUT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
 import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
-import com.kirumbastacy.panoramahotel.ui.screens.about.AboutScreen
-import com.kirumbastacy.panoramahotel.ui.theme.blue
 import com.kirumbastacy.panoramahotel.ui.theme.green
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContactScreen(navController: NavController){
-    //Scaffold
-
+fun ContactScreen(navController: NavController) {
     var selectedIndex by remember { mutableStateOf(0) }
 
     Scaffold(
-        //TopBar
+        // TopBar
         topBar = {
             TopAppBar(
-                title = { Text("Contact") },
+                title = { Text("Contact Us") },
                 navigationIcon = {
-                    IconButton(onClick = { { navController.popBackStack() } }) {
-                        androidx.compose.material3.Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -82,191 +74,156 @@ fun ContactScreen(navController: NavController){
             )
         },
 
-        //BottomBar
+        // BottomBar
         bottomBar = {
-            NavigationBar(
-                containerColor = green
-            ){
+            NavigationBar(containerColor = green) {
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Home, contentDescription = "Home") },
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
                     label = { Text("Home") },
                     selected = selectedIndex == 0,
-                    onClick = { selectedIndex = 0
+                    onClick = {
+                        selectedIndex = 0
                         navController.navigate(ROUT_HOME)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Bookings") },
+                    icon = { Icon(Icons.Default.DateRange, contentDescription = "Bookings", tint = Color.White) },
+                    label = { Text("Bookings", color = Color.White) },
                     selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1
+                    onClick = {
+                        selectedIndex = 1
                         navController.navigate(ROUT_BOOKING_LIST)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Contact") },
+                    icon = { Icon(Icons.Default.Phone, contentDescription = "Profile", tint = Color.White) },
+                    label = { Text("Contact",color = Color.White) },
                     selected = selectedIndex == 2,
-                    onClick = { selectedIndex = 2
-                         navController.navigate(ROUT_CONTACT)
+                    onClick = {
+                        selectedIndex = 2
+                        navController.navigate(ROUT_CONTACT)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info") },
-                    label = { Text("About") },
-                    selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1
-                         navController.navigate(ROUT_ABOUT)
+                    icon = { Icon(Icons.Default.Info, contentDescription = "About", tint = Color.White) },
+                    label = { Text("About",color = Color.White) },
+                    selected = selectedIndex == 3,
+                    onClick = {
+                        selectedIndex = 3
+                        navController.navigate(ROUT_ABOUT)
                     }
                 )
-
-
-
-
             }
         },
 
-
-        //Content
+        // Content
         content = { paddingValues ->
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
+                // Title
+                Text(
+                    text = "Contact Us",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
 
+                // Address Section
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_9),
+                        contentDescription = "Location Icon",
+                        modifier = Modifier.size(50.dp)
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column {
+                        Text(
+                            text = "Address",
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 18.sp
+                        )
+                        Text(
+                            text = "123 Beach Road, Panorama City, California",
+                            fontSize = 16.sp,
+                            modifier = Modifier.clickable {
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("geo:0,0?q=123 Beach Road, Panorama City, California")
+                                )
+                                navController.context.startActivity(intent)
+                            },
+                            color = Color.Blue
+                        )
+                    }
+                }
 
-               Column (modifier = Modifier.fillMaxSize(),
-                       verticalArrangement = Arrangement.Top,
-                   horizontalAlignment = Alignment.Start){
-                   Text(
-                       text = "Contact Us",
-                       fontSize = 24.sp,
-                       fontWeight = FontWeight.Bold,
-                       modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-                   )
-                   Spacer(modifier = Modifier.height(10.dp))
+                // Phone Section
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_7),
+                        contentDescription = "Phone Icon",
+                        modifier = Modifier.size(50.dp)
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column {
+                        Text(
+                            text = "Contact",
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 18.sp
+                        )
+                        Text(
+                            text = "+254 0114 386 232",
+                            fontSize = 16.sp,
+                            color = Color.Blue,
+                            modifier = Modifier.clickable {
+                                val intent = Intent(Intent.ACTION_DIAL).apply {
+                                    data = Uri.parse("tel:+254114386232")
+                                }
+                                navController.context.startActivity(intent)
+                            }
+                        )
+                    }
+                }
 
-
-                   Spacer(modifier = Modifier.height(24.dp))
-
-                   Row ( modifier = Modifier.padding(start = 16.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically){
-                       Image(
-                           painter = painterResource(id = R.drawable.img_9),
-                           contentDescription = "Location Icon",
-                           modifier = Modifier
-                               .size(50.dp)
-                       )
-                       Text(
-                           text = "Address",
-                           fontWeight = FontWeight.SemiBold,
-                           fontSize = 18.sp
-                       )
-                   }
-                   Text(
-                       modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-
-                       text = "123 Beach Road, Panorama City, California",
-                       fontSize = 16.sp
-                   )
-                   Spacer(modifier = Modifier.height(30.dp))
-
-                   Row ( modifier = Modifier.padding(start = 16.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically){
-                       Image(
-                           painter = painterResource(id = R.drawable.img_7),
-                           contentDescription = "Location Icon",
-                           modifier = Modifier
-                               .size(50.dp)
-                       )
-                       Text(
-
-
-
-                           text = "Contact",
-                           fontWeight = FontWeight.SemiBold,
-                           fontSize = 18.sp
-                       )
-                   }
-                   Text(
-                       text = "+254 0114 386 232",
-                       color = Color.Blue,
-                       fontSize = 16.sp,
-                       modifier = Modifier
-                           .padding(start = 16.dp, end = 16.dp).clickable {
-                           val intent = Intent(Intent.ACTION_DIAL).apply {
-                               data = Uri.parse("tel:+254114386232")
-                           }
-
-
-                       }
-                   )
-
-                   Spacer(modifier = Modifier.height(30.dp))
-
-                   Row ( modifier = Modifier.padding(start = 16.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically){
-                       Image(
-                           painter = painterResource(id = R.drawable.img_10),
-                           contentDescription = "Email Icon",
-                           modifier = Modifier
-                               .size(50.dp)
-                       )
-                       Spacer(modifier = Modifier.width(10.dp))
-                       Text(
-                           text = "Email",
-                           fontWeight = FontWeight.SemiBold,
-                           fontSize = 18.sp,
-
-                       )
-                   }
-
-                   Text(
-                       text = "panoramahotel@gmail.com",
-                       color = Color.Blue,
-                       fontSize = 16.sp,
-                       modifier = Modifier
-                           .padding(start = 16.dp, end = 16.dp).clickable {
-                           val intent = Intent(Intent.ACTION_SENDTO).apply {
-                               data = Uri.parse("mailto:panoramahotel@gmail.com")
-                           }
-
-                       }
-                   )
-
-
-
-
-
-
-
-
-
-               }
-
-
-
-
-
-
-
-
-
-
-
-
+                // Email Section
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_10),
+                        contentDescription = "Email Icon",
+                        modifier = Modifier.size(50.dp)
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column {
+                        Text(
+                            text = "Email",
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 18.sp
+                        )
+                        Text(
+                            text = "panoramahotel@gmail.com",
+                            fontSize = 16.sp,
+                            color = Color.Blue,
+                            modifier = Modifier.clickable {
+                                val intent = Intent(Intent.ACTION_SENDTO).apply {
+                                    data = Uri.parse("mailto:panoramahotel@gmail.com")
+                                }
+                                navController.context.startActivity(intent)
+                            }
+                        )
+                    }
+                }
             }
         }
     )
-
-    //End of scaffold
-
-
-
-
-
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ContactScreenPreview(){
+fun ContactScreenPreview() {
     ContactScreen(navController = rememberNavController())
 }

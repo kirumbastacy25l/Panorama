@@ -54,7 +54,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kirumbastacy.panoramahotel.R
+import com.kirumbastacy.panoramahotel.navigation.ROUT_ABOUT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
+import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_DELUXE
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 import com.kirumbastacy.panoramahotel.navigation.ROUT_PRESIDENTIAL
@@ -97,7 +99,7 @@ fun RoomScreen(navController: NavController){
             ){
                 NavigationBarItem(
                     icon = { androidx.compose.material3.Icon(Icons.Default.Home, contentDescription = "Home", ) },
-                    label = { Text("Home") },
+                    label = { Text("Home", color = Color.White) },
                     selected = selectedIndex == 0,
                     onClick = { selectedIndex = 0
                         navController.navigate(ROUT_HOME)
@@ -116,7 +118,7 @@ fun RoomScreen(navController: NavController){
                     label = { Text("Contact", color = VeryWhite) },
                     selected = selectedIndex == 2,
                     onClick = { selectedIndex = 2
-                        //  navController.navigate(ROUT_HOME)
+                          navController.navigate(ROUT_CONTACT)
                     }
                 )
                 NavigationBarItem(
@@ -124,7 +126,7 @@ fun RoomScreen(navController: NavController){
                     label = { Text("About", color = VeryWhite) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                        // navController.navigate(ROUT_HOME)
+                         navController.navigate(ROUT_ABOUT)
                     }
                 )
 

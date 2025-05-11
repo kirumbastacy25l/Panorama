@@ -14,10 +14,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -48,6 +50,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.kirumbastacy.panoramahotel.R
+import com.kirumbastacy.panoramahotel.navigation.ROUT_ABOUT
+import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
+import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
+import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 import com.kirumbastacy.panoramahotel.navigation.ROUT_PAY
 import com.kirumbastacy.panoramahotel.navigation.ROUT_PAYMENT
 import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
@@ -66,9 +72,9 @@ fun ConfirmScreen(navController: NavController){
         //TopBar
         topBar = {
             TopAppBar(
-                title = { Text("Contact") },
+                title = { Text("Confirmed") },
                 navigationIcon = {
-                    IconButton(onClick = { /* Handle back/nav */ }) {
+                    IconButton(onClick = {navController.popBackStack() }) {
                         androidx.compose.material3.Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 },
@@ -86,35 +92,35 @@ fun ConfirmScreen(navController: NavController){
                 containerColor = green
             ){
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Home, contentDescription = "Home") },
-                    label = { Text("Home") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Home, contentDescription = "Home", tint = Color.White) },
+                    label = { Text("Home", color = Color.White) },
                     selected = selectedIndex == 0,
                     onClick = { selectedIndex = 0
-                        // navController.navigate(ROUT_HOME)
+                         navController.navigate(ROUT_HOME)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.DateRange, contentDescription = "Favorites", tint = Color.White) },
+                    label = { Text("Bookings", color = Color.White) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                        // navController.navigate(ROUT_HOME)
+                        navController.navigate(ROUT_BOOKING_LIST)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Phone, contentDescription = "Profile", tint = Color.White) },
+                    label = { Text("Contact", color = Color.White) },
                     selected = selectedIndex == 2,
                     onClick = { selectedIndex = 2
-                        //  navController.navigate(ROUT_HOME)
+                          navController.navigate(ROUT_CONTACT)
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info") },
-                    label = { Text("Info") },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info", tint = Color.White) },
+                    label = { Text("About") },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                        // navController.navigate(ROUT_HOME)
+                         navController.navigate(ROUT_ABOUT)
                     }
                 )
 

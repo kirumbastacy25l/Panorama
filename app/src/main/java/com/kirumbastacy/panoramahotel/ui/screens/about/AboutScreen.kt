@@ -1,14 +1,26 @@
 package com.kirumbastacy.panoramahotel.ui.screens.about
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
@@ -24,15 +36,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.kirumbastacy.panoramahotel.R
 import com.kirumbastacy.panoramahotel.navigation.ROUT_ABOUT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
 import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
+import com.kirumbastacy.panoramahotel.navigation.ROUT_DELUXE
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
 import com.kirumbastacy.panoramahotel.ui.theme.green
@@ -73,14 +89,14 @@ fun AboutScreen(navController: NavController) {
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Favorites",tint = Color.White) },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.DateRange, contentDescription = "Favorites",tint = Color.White) },
                     label = { Text("Bookings", color = VeryWhite) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
                         navController.navigate(ROUT_BOOKING_LIST)}
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Profile",tint = Color.White) },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Phone, contentDescription = "Profile",tint = Color.White) },
                     label = { Text("Contact", color = VeryWhite) },
                     selected = selectedIndex == 2,
                     onClick = { selectedIndex = 2
@@ -103,6 +119,7 @@ fun AboutScreen(navController: NavController) {
                     .padding(paddingValues)
                     .fillMaxSize()
                     .padding(16.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
                 // Hotel Name
                 Text(
@@ -157,6 +174,115 @@ fun AboutScreen(navController: NavController) {
                     Text("• Spa and wellness center", fontSize = 16.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
                     Text("• Swimming pool with panoramic views", fontSize = 16.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
                 }
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Card(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .padding(8.dp),
+                    colors = CardDefaults.cardColors(VeryWhite),
+                    shape = RoundedCornerShape(12.dp)) {
+                    Image(
+                        painter = painterResource(R.drawable.img_18),
+                        contentDescription = "home",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(170.dp)
+                            .clickable {
+                                navController.navigate(ROUT_DELUXE)
+                            },
+                        contentScale = ContentScale.Crop
+                    )
+                    Text(
+                        text = "Luxurious Dining",
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(start = 8.dp, top = 8.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Card(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .padding(8.dp),
+                    colors = CardDefaults.cardColors(VeryWhite),
+                    shape = RoundedCornerShape(12.dp)) {
+                    Image(
+                        painter = painterResource(R.drawable.img_19),
+                        contentDescription = "home",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(170.dp)
+                            .clickable {
+                                navController.navigate(ROUT_DELUXE)
+                            },
+                        contentScale = ContentScale.Crop
+                    )
+                    Text(
+                        text = "Spa and Wellness",
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(start = 8.dp, top = 8.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Card(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .padding(8.dp),
+                    colors = CardDefaults.cardColors(VeryWhite),
+                    shape = RoundedCornerShape(12.dp)) {
+                    Image(
+                        painter = painterResource(R.drawable.img_20),
+                        contentDescription = "home",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(170.dp)
+                            .clickable {
+                                navController.navigate(ROUT_DELUXE)
+                            },
+                        contentScale = ContentScale.Crop
+                    )
+                    Text(
+                        text = "Swimming Pool and Recreation",
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(start = 8.dp, top = 8.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Card(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .padding(8.dp),
+                    colors = CardDefaults.cardColors(VeryWhite),
+                    shape = RoundedCornerShape(12.dp)) {
+                    Image(
+                        painter = painterResource(R.drawable.img_21),
+                        contentDescription = "home",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(170.dp)
+                            .clickable {
+                                navController.navigate(ROUT_DELUXE)
+                            },
+                        contentScale = ContentScale.Crop
+                    )
+                    Text(
+                        text = "Conference Centre",
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(start = 8.dp, top = 8.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+
+
+
+
             }
         }
     )

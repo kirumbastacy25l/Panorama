@@ -244,13 +244,13 @@ fun HomeScreen(navController: NavController){
                             Card ( modifier = Modifier
                                 .fillMaxWidth()
                                 .height(60.dp)
-                                .clickable{navController.navigate(ROUT_ROOMS)},
+                                .clickable{navController.navigate(ROUT_ABOUT)},
                                 elevation = CardDefaults.cardElevation(10.dp)
                             )
                             {
-                                Row ( modifier = Modifier.padding(start = 16.dp, end = 16.dp),verticalAlignment = Alignment.CenterVertically){
+                                Row ( modifier = Modifier.padding(start = 5.dp, end = 5.dp),verticalAlignment = Alignment.CenterVertically){
                                     Image(
-                                        painter = painterResource(id = R.drawable.img_14),
+                                        painter = painterResource(id = R.drawable.img_17),
                                         contentDescription = "Bed Icon",
                                         modifier = Modifier
                                             .size(50.dp)
