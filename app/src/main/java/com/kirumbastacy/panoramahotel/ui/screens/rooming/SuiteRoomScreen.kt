@@ -38,6 +38,7 @@ import com.kirumbastacy.panoramahotel.navigation.ROUT_ADD_BOOKING
 import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
 import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
+import com.kirumbastacy.panoramahotel.navigation.ROUT_PROFILE
 import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
 import com.kirumbastacy.panoramahotel.ui.theme.green
 
@@ -69,7 +70,7 @@ fun SuiteRoomScreen(navController: NavController) {
             NavigationBar(containerColor = green) {
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                    label = { Text("Home") },
+                    label = { Text("Home", color = VeryWhite) },
                     selected = selectedIndex == 0,
                     onClick = {
                         selectedIndex = 0
@@ -78,24 +79,25 @@ fun SuiteRoomScreen(navController: NavController) {
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.DateRange, contentDescription = "Favorites", tint = Color.White) },
-                    label = { Text("Bookings") },
+                    label = { Text("Bookings", color = VeryWhite) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
                         navController.navigate(ROUT_BOOKING_LIST)}
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Phone, contentDescription = "Profile", tint = Color.White) },
-                    label = { Text("Contact") },
+                    label = { Text("Contact", color = VeryWhite) },
                     selected = selectedIndex == 2,
                     onClick = { selectedIndex = 2
                         navController.navigate(ROUT_CONTACT)}
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Info, contentDescription = "Info", tint = Color.White) },
-                    label = { Text("About") },
-                    selected = selectedIndex == 3,
-                    onClick = { selectedIndex = 3
-                        navController.navigate(ROUT_ABOUT)}
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Info",tint = Color.White) },
+                    label = { Text("Profile", color = VeryWhite) },
+                    selected = selectedIndex == 1,
+                    onClick = { selectedIndex = 1
+                        navController.navigate(ROUT_PROFILE)
+                    }
                 )
             }
         },

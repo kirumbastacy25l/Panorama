@@ -60,6 +60,7 @@ import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_DELUXE
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
 import com.kirumbastacy.panoramahotel.navigation.ROUT_PRESIDENTIAL
+import com.kirumbastacy.panoramahotel.navigation.ROUT_PROFILE
 import com.kirumbastacy.panoramahotel.navigation.ROUT_STANDARD
 import com.kirumbastacy.panoramahotel.navigation.ROUT_SUITE
 import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
@@ -122,11 +123,11 @@ fun RoomScreen(navController: NavController){
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info", tint = Color.White) },
-                    label = { Text("About", color = VeryWhite) },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Info", tint = Color.White) },
+                    label = { Text("Profile", color = VeryWhite) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                         navController.navigate(ROUT_ABOUT)
+                         navController.navigate(ROUT_PROFILE)
                     }
                 )
 

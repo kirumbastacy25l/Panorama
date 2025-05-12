@@ -59,6 +59,7 @@ import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
 import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
 
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
+import com.kirumbastacy.panoramahotel.navigation.ROUT_PROFILE
 import com.kirumbastacy.panoramahotel.navigation.ROUT_ROOMS
 import com.kirumbastacy.panoramahotel.ui.theme.LightBrown
 import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
@@ -116,11 +117,11 @@ fun HomeScreen(navController: NavController){
                     }
                 )
                 NavigationBarItem(
-                    icon = { androidx.compose.material3.Icon(Icons.Default.Info, contentDescription = "Info",tint = Color.White) },
-                    label = { Text("About", color = VeryWhite) },
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Info",tint = Color.White) },
+                    label = { Text("Profile", color = VeryWhite) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
-                         navController.navigate(ROUT_ABOUT)
+                         navController.navigate(ROUT_PROFILE)
                     }
                 )
 
@@ -154,7 +155,7 @@ fun HomeScreen(navController: NavController){
 
                         ) {
                         Text(
-                            text = "Welcome,\nJohn",
+                            text = "Welcome,\nGuest!",
                             fontSize = 32.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White

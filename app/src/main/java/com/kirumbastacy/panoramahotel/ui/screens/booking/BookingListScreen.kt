@@ -195,6 +195,12 @@ fun BookingItem(navController: NavController, booking: Booking, viewModel: Booki
                     color = Color.White
                 )
                 Text(
+                    text = booking.contact,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Text(
                     text = "Room Type: ${booking.roomType}",
                     fontSize = 16.sp,
                     color = Color.White
@@ -211,6 +217,7 @@ fun BookingItem(navController: NavController, booking: Booking, viewModel: Booki
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
+
             }
 
             // Buttons (Message, Edit, Delete)

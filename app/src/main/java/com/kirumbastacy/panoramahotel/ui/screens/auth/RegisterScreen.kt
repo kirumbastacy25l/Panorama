@@ -1,5 +1,6 @@
 package com.kirumbastacy.panoramahotel.ui.screens.auth
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearEasing
@@ -91,7 +92,7 @@ fun RegisterScreen(
 
 
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                    leadingIcon = { Icon(Icons.Filled.Person, contentDescription = "Username Icon", tint = green) },
+            leadingIcon = { Icon(Icons.Filled.Person, contentDescription = "Username Icon", tint = green) },
             modifier = Modifier.fillMaxWidth()
 
         )
@@ -185,7 +186,7 @@ fun RegisterScreen(
             ),
 
 
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -215,13 +216,14 @@ fun RegisterScreen(
         )
 
         Spacer(modifier = Modifier.height(5.dp))
-        
+
         if (isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 color = green
             )
         }
+        val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
 
         Button(
             onClick = {

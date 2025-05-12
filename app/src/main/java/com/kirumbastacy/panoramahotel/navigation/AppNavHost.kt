@@ -24,6 +24,7 @@ import com.kirumbastacy.panoramahotel.ui.screens.contact.ContactScreen
 import com.kirumbastacy.panoramahotel.ui.screens.home.HomeScreen
 import com.kirumbastacy.panoramahotel.ui.screens.pay.PayScreen
 import com.kirumbastacy.panoramahotel.ui.screens.pay.PaymentScreen
+import com.kirumbastacy.panoramahotel.ui.screens.profile.ProfileScreen
 import com.kirumbastacy.panoramahotel.ui.screens.rooming.DeluxeRoomScreen
 import com.kirumbastacy.panoramahotel.ui.screens.rooming.PresidentialSuiteScreen
 import com.kirumbastacy.panoramahotel.ui.screens.rooming.StandardRoomScreen
@@ -32,6 +33,7 @@ import com.kirumbastacy.panoramahotel.ui.screens.rooms.RoomScreen
 import com.kirumbastacy.panoramahotel.ui.screens.splash.SplashScreen
 import com.kirumbastacy.panoramahotel.viewmodel.AuthViewModel
 import com.kirumbastacy.panoramahotel.viewmodel.BookingViewModel
+import com.kirumbastacy.panoramahotel.viewmodel.ProfileViewModel
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -93,6 +95,7 @@ fun AppNavHost(
 
 
 
+
         //AUTHENTICATION
 
         // Initialize Room Database and Repository for Authentication
@@ -113,6 +116,15 @@ fun AppNavHost(
                     popUpTo(ROUT_LOGIN) { inclusive = true }
                 }
             }
+        }
+
+        composable(ROUT_PROFILE) {
+            val context = LocalContext.current
+            val appDatabase = UserDatabase.getDatabase(context)
+            val userRepository = UserRepository(appDatabase.userDao())
+            val profileViewModel = ProfileViewModel(userRepository)
+
+            ProfileScreen(navController = navController, viewModel = profileViewModel)
         }
 
 

@@ -1,4 +1,5 @@
 package com.kirumbastacy.panoramahotel.ui.screens.auth
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -27,8 +28,7 @@ import androidx.navigation.NavController
 import com.kirumbastacy.panoramahotel.R
 import com.kirumbastacy.panoramahotel.navigation.ROUT_ABOUT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
-
-
+import com.kirumbastacy.panoramahotel.navigation.ROUT_LOGIN
 import com.kirumbastacy.panoramahotel.navigation.ROUT_REGISTER
 import com.kirumbastacy.panoramahotel.ui.theme.green
 import com.kirumbastacy.panoramahotel.viewmodel.AuthViewModel
@@ -45,23 +45,18 @@ fun LoginScreen(
     var isLoading by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    // Observe login logic
-    LaunchedEffect(authViewModel) {
-        authViewModel.loggedInUser = { user ->
-            if (user == null) {
-                Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show()
-            } else {
-                if (user.role == "admin") {
-                    navController.navigate(ROUT_HOME) {
-                    }
-                } else {
-                    navController.navigate(ROUT_HOME) {
-                    }
-                }
+    val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+
+    authViewModel.loggedInUser = { user ->
+        if (user != null) {
+            sharedPreferences.edit().putString("logged_in_user_email", user.email).apply() // Save email
+            navController.navigate(ROUT_HOME) {
+                popUpTo(ROUT_LOGIN) { inclusive = true }
             }
+        } else {
+            Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show()
         }
     }
-//End of login logic
 
     Column(
         modifier = Modifier
@@ -70,19 +65,14 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Animated Welcome Text
-        AnimatedVisibility(
-            visible = true,
-            enter = fadeIn(animationSpec = tween(1000)),
-            exit = fadeOut(animationSpec = tween(1000))
-        ) {
+
 
             Text(
                 text = "Welcome Back!",
                 fontSize = 40.sp,
                 fontFamily = FontFamily.Cursive
             )
-        }
+
 
         Spacer(modifier = Modifier.height(24.dp))
         //Email

@@ -49,6 +49,7 @@ import com.kirumbastacy.panoramahotel.navigation.ROUT_ABOUT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
 import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
+import com.kirumbastacy.panoramahotel.navigation.ROUT_PROFILE
 import com.kirumbastacy.panoramahotel.ui.theme.green
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -105,12 +106,12 @@ fun ContactScreen(navController: NavController) {
                     }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Info, contentDescription = "About", tint = Color.White) },
-                    label = { Text("About",color = Color.White) },
+                    icon = { Icon(Icons.Default.Person, contentDescription = "About", tint = Color.White) },
+                    label = { Text("Profile",color = Color.White) },
                     selected = selectedIndex == 3,
                     onClick = {
                         selectedIndex = 3
-                        navController.navigate(ROUT_ABOUT)
+                        navController.navigate(ROUT_PROFILE)
                     }
                 )
             }

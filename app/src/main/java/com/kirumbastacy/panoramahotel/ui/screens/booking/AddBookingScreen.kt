@@ -36,6 +36,7 @@ import com.kirumbastacy.panoramahotel.navigation.ROUT_ADD_BOOKING
 import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
 import com.kirumbastacy.panoramahotel.navigation.ROUT_CONFIRM
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
+import com.kirumbastacy.panoramahotel.navigation.ROUT_PROFILE
 import com.kirumbastacy.panoramahotel.ui.theme.green
 import java.util.Calendar
 
@@ -330,20 +331,20 @@ fun BottomNavigationBar1(navController: NavController) {
         NavigationBarItem(
             selected = false,
             onClick = { navController.navigate(ROUT_HOME) },
-            icon = { Icon(Icons.Default.Home, contentDescription = "Booking List") },
-            label = { Text("Home") }
+            icon = { Icon(Icons.Default.Home, contentDescription = "Booking List", tint = Color.White) },
+            label = { Text("Home", color = Color.White) }
         )
         NavigationBarItem(
             selected = false,
             onClick = { navController.navigate(ROUT_ADD_BOOKING) },
-            icon = { Icon(Icons.Default.AddCircle, contentDescription = "Add Booking") },
-            label = { Text("Add") }
+            icon = { Icon(Icons.Default.AddCircle, contentDescription = "Add Booking", tint = Color.White) },
+            label = { Text("Add", color = Color.White) }
         )
         NavigationBarItem(
             selected = false,
-            onClick = { navController.navigate(ROUT_ADD_BOOKING) },
-            icon = { Icon(painter = painterResource(R.drawable.register), contentDescription = "") },
-            label = { Text("Profile") }
+            onClick = { navController.navigate(ROUT_PROFILE) },
+            icon = { Icon(Icons.Default.Person, contentDescription = "Profile", tint = Color.White) },
+            label = { Text("Profile", color = Color.White) }
         )
     }
 }

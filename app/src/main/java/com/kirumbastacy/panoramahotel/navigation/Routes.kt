@@ -19,6 +19,7 @@ const val ROUT_PAY= "pay"
 //Authentication
 const val ROUT_REGISTER = "Register"
 const val ROUT_LOGIN = "Login"
+const val ROUT_PROFILE = "Profile"
 
 //Bookings
 

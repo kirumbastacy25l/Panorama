@@ -38,6 +38,7 @@ import com.kirumbastacy.panoramahotel.navigation.ROUT_ADD_BOOKING
 import com.kirumbastacy.panoramahotel.navigation.ROUT_BOOKING_LIST
 import com.kirumbastacy.panoramahotel.navigation.ROUT_CONTACT
 import com.kirumbastacy.panoramahotel.navigation.ROUT_HOME
+import com.kirumbastacy.panoramahotel.navigation.ROUT_PROFILE
 import com.kirumbastacy.panoramahotel.ui.theme.VeryWhite
 import com.kirumbastacy.panoramahotel.ui.theme.green
 
@@ -69,7 +70,7 @@ fun PresidentialSuiteScreen(navController: NavController) {
             NavigationBar(containerColor = green) {
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                    label = { Text("Home") },
+                    label = { Text("Home", color = VeryWhite) },
                     selected = selectedIndex == 0,
                     onClick = {
                         selectedIndex = 0
@@ -77,39 +78,32 @@ fun PresidentialSuiteScreen(navController: NavController) {
                     }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.DateRange, contentDescription = "Favorites") },
-                    label = { Text("Bookings") },
+                    icon = { Icon(Icons.Default.DateRange, contentDescription = "Favorites", tint = Color.White) },
+                    label = { Text("Bookings", color = VeryWhite) },
                     selected = selectedIndex == 1,
                     onClick = { selectedIndex = 1
                         navController.navigate(ROUT_BOOKING_LIST)
                     }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Phone, contentDescription = "Profile") },
-                    label = { Text("Contact") },
+                    icon = { Icon(Icons.Default.Phone, contentDescription = "Profile", tint = Color.White) },
+                    label = { Text("Contact", color = VeryWhite) },
                     selected = selectedIndex == 2,
                     onClick = { selectedIndex = 2
                         navController.navigate(ROUT_CONTACT)}
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Info, contentDescription = "Info") },
-                    label = { Text("About") },
-                    selected = selectedIndex == 3,
-                    onClick = { selectedIndex = 3
-                        navController.navigate(ROUT_ABOUT)}
+                    icon = { androidx.compose.material3.Icon(Icons.Default.Person, contentDescription = "Info",tint = Color.White) },
+                    label = { Text("Profile", color = VeryWhite) },
+                    selected = selectedIndex == 1,
+                    onClick = { selectedIndex = 1
+                        navController.navigate(ROUT_PROFILE)
+                    }
                 )
             }
         },
 
-        // FloatingActionButton
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /* Add action */ },
-                containerColor = green
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "Add")
-            }
-        },
+
 
         // Content
         content = { paddingValues ->
@@ -123,7 +117,7 @@ fun PresidentialSuiteScreen(navController: NavController) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(240.dp)
+                        .height(260.dp)
                         .padding(8.dp),
                     colors = CardDefaults.cardColors(VeryWhite),
                     shape = RoundedCornerShape(12.dp)
